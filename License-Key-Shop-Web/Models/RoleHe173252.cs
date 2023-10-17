@@ -11,7 +11,7 @@ namespace License_Key_Shop_Web.Models
         }
 
         public int RoleId { get; set; }
-        public int RoleName { get; set; }
+        public string RoleName { get; set; } = null!;
 
         public virtual ICollection<UserHe173252> UserHe173252s { get; set; }
     }
