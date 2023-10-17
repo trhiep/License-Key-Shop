@@ -23,6 +23,6 @@ app.UseAuthorization();
 //app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Filter}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
