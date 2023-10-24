@@ -4,4 +4,4 @@ PRN211 Assignment Fall23 - FPT University Hanoi
 
 
 References
-1. Website template: https://www.free-css.com/free-css-templates/page284/pet-shop
+1. Website template: [HTML Codex](https://htmlcodex.com/pet-shop-website-template/)
