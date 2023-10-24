@@ -7,8 +7,13 @@ namespace License_Key_Shop_Web.Models
 {
     public partial class PRN211_FA23_SE1733Context : DbContext
     {
-        public PRN211_FA23_SE1733Context()
+        public static PRN211_FA23_SE1733Context INSTANCE = new PRN211_FA23_SE1733Context();
+        private PRN211_FA23_SE1733Context()
         {
+            if (INSTANCE == null)
+            {
+                INSTANCE = this;
+            }
         }
 
         public PRN211_FA23_SE1733Context(DbContextOptions<PRN211_FA23_SE1733Context> options)
@@ -284,6 +289,8 @@ namespace License_Key_Shop_Web.Models
                 entity.ToTable("Role_HE173252");
 
                 entity.Property(e => e.RoleId).HasColumnName("RoleID");
+
+                entity.Property(e => e.RoleName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<UserBalanceHe173252>(entity =>
@@ -319,6 +326,10 @@ namespace License_Key_Shop_Web.Models
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.FirstName).HasMaxLength(75);
+
+                entity.Property(e => e.LastName).HasMaxLength(75);
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(100)
