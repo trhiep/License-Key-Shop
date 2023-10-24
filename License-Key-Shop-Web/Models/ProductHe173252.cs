@@ -17,6 +17,7 @@ namespace License_Key_Shop_Web.Models
         public double Price { get; set; }
         public int Description { get; set; }
         public int CategoryCategoryId { get; set; }
+        public string Image { get; set; } = null!;
 
         public virtual CategoryHe173252 CategoryCategory { get; set; } = null!;
         public virtual ICollection<CartItemHe173252> CartItemHe173252s { get; set; }

@@ -1,0 +1,54 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!-- Login Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="border-start border-5 border-success ps-5 mb-5" style="max-width: 600px;">
+                    <h1 class="display-5 text-uppercase mb-0">Login</h1>
+                </div>
+                <form asp-action="Index" asp-controller="Login" method="post">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label>Username</label>
+                            <input value="@(ViewBag.username)" name="username" type="text" class="form-control bg-light border-0 px-4" style="height: 55px;" required>
+                            @{
+                                if (ViewBag.loginUsernameErr != null)
+                                {
+                                    <span style="color: red; font-style: italic">*@(ViewBag.loginUsernameErr)</span>
+                                }
+                            }
+                        </div>
+                        <div class="col-12">
+                            <label>Password</label>
+                            <input name="password" type="password" class="form-control bg-light border-0 px-4" style="height: 55px;" required>
+                            @{
+                                if (ViewBag.loginPasswordErr != null)
+                                {
+                                    <span style="color: red; font-style: italic">*@(ViewBag.loginPasswordErr)</span>
+                                }
+                            }
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success w-100 py-3" type="submit">Login</button>
+                        </div>
+                        <div class="col-12 text-center">
+                            <label>Or</label>
+                        </div>
+                        <div class="col-12">
+                            <a href="/Register" class="btn btn-outline-success w-100 py-3">Register</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</div>
+<!-- Login End -->
