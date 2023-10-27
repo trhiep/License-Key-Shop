@@ -33,6 +33,13 @@
 
     <!-- Template Stylesheet -->
     <link href="~/css/admin-style.css" rel="stylesheet" />
+
+    <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#tinymce'
+        });
+    </script>
 </head>
 
 <body>
@@ -65,7 +72,7 @@
                         </div>
                     </div>
                     <a href="/CategoryManagement" class="nav-item nav-link"><i class="fa fa-solid fa-folder me-2"></i>Category</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-regular fa-box me-2"></i>Product</a>
+                    <a href="/ProductManagement" class="nav-item nav-link"><i class="fa fa-regular fa-box me-2"></i>Product</a>
                     <a href="form.html" class="nav-item nav-link"><i class="fa fa-solid fa-key me-2"></i>Key Storage</a>
                     <a href="table.html" class="nav-item nav-link"><i class="fa fa-solid fa-file-invoice-dollar me-2"></i>Deposit</a>
                 </div>

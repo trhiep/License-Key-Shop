@@ -8,7 +8,7 @@ namespace License_Key_Shop_Web.Models
     public partial class PRN211_FA23_SE1733Context : DbContext
     {
         public static PRN211_FA23_SE1733Context INSTANCE = new PRN211_FA23_SE1733Context();
-        private PRN211_FA23_SE1733Context()
+        public PRN211_FA23_SE1733Context()
         {
             if (INSTANCE == null)
             {
@@ -161,12 +161,12 @@ namespace License_Key_Shop_Web.Models
 
             modelBuilder.Entity<OrderDetailHe173252>(entity =>
             {
-                entity.HasKey(e => e.ProductSoldId)
+                entity.HasKey(e => e.OrderDetailId)
                     .HasName("OrderDetail_HE173252_pk");
 
                 entity.ToTable("OrderDetail_HE173252");
 
-                entity.Property(e => e.ProductSoldId).HasColumnName("ProductSoldID");
+                entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
 
                 entity.Property(e => e.ExpirationDate).HasColumnType("date");
 
@@ -175,6 +175,8 @@ namespace License_Key_Shop_Web.Models
                 entity.Property(e => e.ProductKey)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ProductSoldName).HasMaxLength(255);
 
                 entity.HasOne(d => d.OrderHistoryOrder)
                     .WithMany(p => p.OrderDetailHe173252s)

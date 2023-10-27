@@ -5,6 +5,7 @@ namespace License_Key_Shop_Web.Controllers
 {
     public class CategoryManagementController : Controller
     {
+      
         public IActionResult Index()
         {
             var cateList = PRN211_FA23_SE1733Context.INSTANCE.CategoryHe173252s.ToArray();
