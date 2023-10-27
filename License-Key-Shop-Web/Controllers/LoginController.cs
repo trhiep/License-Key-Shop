@@ -14,8 +14,8 @@ namespace License_Key_Shop_Web.Controllers
         [HttpPost]
         public IActionResult Index(IFormCollection f)
         {
-            string username = f["username"];
-            string password = f["password"];
+            String username = f["username"];
+            String password = f["password"];
             UserHe173252 urs = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(username);
             if (urs == null)
             {
@@ -25,7 +25,14 @@ namespace License_Key_Shop_Web.Controllers
             {
                 if (urs.Password == EncryptionMethods.SHA256Encrypt(password))
                 {
-                    return RedirectToAction("Index", "Home");
+                    HttpContext.Session.SetString("userAcc", urs.Username);
+                    if (urs.RoleRoleId == 1)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    } else
+                    {
+                        return Redirect("/Admin");
+                    }
                 }
                 else
                 {

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Login Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                    <h1 class="display-5 text-uppercase mb-0">Add New Product</h1>
+                </div>
+                <form action="/ProductManagement/Create" method="post" enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label style="font-size: 18px">Category</label><br>
+                            <select id="inputState" name="categoryId" class="form-control form-control-lg bg-light border-1 px-4" style="height: 55px;">
+                                <option selected>Select one...</option>
+                                @{
+                                    foreach (var cate in ViewBag.cateList)
+                                    {
+                                        <option value="@(cate.CategoryId)">@(cate.CategoryName)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label style="font-size: 18px">Product Name</label>
+                            <input name="productName" type="text" class="form-control bg-light border-1 px-4" style="height: 55px;" required>
+                        </div>
+                        <div class="col-12">
+                            <label style="font-size: 18px">Price</label>
+                            <input name="price" type="text" class="form-control bg-light border-1 px-4" style="height: 55px;" required>
+                        </div>
+                        <div class="col-12">
+                            <label style="font-size: 18px">Product Image</label>
+                            <input class="form-control form-control-lg" style="height: 55px" type="file" name="file" accept="image/*"/>
+                        </div>
+                        <div class="col-12">
+                            <label style="font-size: 18px">Description</label>
+                            <textarea name="description" id="tinymce"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-25 py-3" type="submit">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</div>
+<!-- Login End -->

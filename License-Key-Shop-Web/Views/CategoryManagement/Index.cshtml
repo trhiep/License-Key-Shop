@@ -1,0 +1,101 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Category Start -->
+<div class="container-fluid pt-5" style="margin-top: 50px; margin-bottom: 50px">
+    <div class="container">
+        <div class="row g-5">
+            @{
+                if (ViewBag.cateList != null)
+                {
+                    <div class="col-lg-5">
+                        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                            <h1 class="display-5 text-uppercase mb-0">Current</h1>
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in ViewBag.cateList)
+                                    {
+                                        <tr>
+                                            <form asp-action="Update" asp-controller="CategoryManagement" method="post">
+                                            <td scope="row">@(item.CategoryId)</td>
+                                            <td scope="row">
+                                                <input type="text" class="form-control" name="categoryName" value="@(item.CategoryName)" />
+                                                <input type="hidden" name="categoryID" value="@(item.CategoryId)" />
+                                            </td>
+                                            <td scope="row" class="text-center">
+                                                <button class="btn btn-primary" type="submit">Update</button>
+                                                <a asp-action="Delete" asp-controller="CategoryManagement" asp-route-id="@item.CategoryId" class="btn btn-danger">Delete</a>
+                                            </td>
+                                            </form>
+                                        </tr>
+                                    }
+                                    if (TempData["updateCategorySuccess"] != null)
+                                    {
+                                        <span style="color: green; font-style: italic">*@(TempData["updateCategorySuccess"])</span>
+                                    }
+                                    if (TempData["updateCategoryErr"] != null)
+                                    {
+                                        <span style="color: red; font-style: italic">*@(TempData["updateCategoryErr"])</span>
+                                    }
+                                    if (TempData["deleteCategorySuccess"] != null)
+                                    {
+                                        <span style="color: green; font-style: italic">*@(TempData["deleteCategorySuccess"])</span>
+                                    }
+                                    if (TempData["deleteCategoryErr"] != null)
+                                    {
+                                        <span style="color: red; font-style: italic">*@(TempData["deleteCategoryErr"])</span>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+            <div class="col-lg-2"></div>
+            <div class="col-lg-5">
+                <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                    <h1 class="display-5 text-uppercase mb-0">Add category</h1>
+                </div>
+                <form asp-action="Create" asp-controller="CategoryManagement" method="post">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-8">
+                                    <input name="categoryName" placeholder="Category name" type="text" class="form-control bg-light border-2 px-4" style="height: 55px;" pattern="^(?=.*[a-z])(?=.*[A-Z]).{3,25}$" title="Category name can only contain 3 to 25 lowercase letters and numbers." required>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-primary w-50 py-3" type="submit">Add</button>
+                                </div>
+                            </div>
+                            @{
+                                if (TempData["AddCategoryErr"] != null)
+                                {
+                                    <span style="color: red; font-style: italic">*@(TempData["AddCategoryErr"])</span>
+                                }
+                            }
+                            @{
+                                if (TempData["AddCategorySuccess"] != null)
+                                {
+                                    <span style="color: green; font-style: italic">*@(TempData["AddCategorySuccess"])</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Category End -->
