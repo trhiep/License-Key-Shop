@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Create Start -->
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                    <h1 class="display-5 text-uppercase mb-0">Add New Product Key</h1>
+                </div>
+                <form action="/ProductKey/Create" method="post">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label style="font-size: 18px">Product</label><br>
+                            <select id="inputState" name="productId" class="form-control form-control-lg bg-light border-1 px-4" style="height: 55px;">
+                                <option selected>Select one...</option>
+                                @{
+                                    foreach (var prd in @ViewBag.prdList)
+                                    {
+                                        <option value="@(prd.ProductId)">@(prd.ProductName)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label style="font-size: 18px">Key Value</label>
+                            <input name="keyValue" type="text" class="form-control bg-light border-1 px-4" style="height: 55px;" required>
+                        </div>
+                        <div class="col-12">
+                            <label style="font-size: 18px">Expiration Date</label>
+                            <input class="form-control bg-light border-1 px-4" id="dateInputStr" pattern="\d{2}-\d{2}-\d{4}" placeholder="dd-mm-yyyy" style="height: 55px" type="text" name="expirationDate" />
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-25 py-3" type="submit">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</div>
+<!-- Create End -->
+

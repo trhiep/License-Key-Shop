@@ -44,6 +44,17 @@ namespace License_Key_Shop_Web.Controllers
                         IsVerified = false,
                     };
                     PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Add(userInf);
+                    CartHe173252 userCart = new CartHe173252() {
+                        UserUsername = username,
+                        Total = 0,
+                    };
+                    PRN211_FA23_SE1733Context.INSTANCE.CartHe173252s.Add(userCart);
+                    UserBalanceHe173252 userBal = new UserBalanceHe173252()
+                    {
+                        UserUsername = username,
+                        Amount = 0,
+                    };
+                    PRN211_FA23_SE1733Context.INSTANCE.UserBalanceHe173252s.Add(userBal);
                     PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
                     return RedirectToAction("Index", "Login");
                 }

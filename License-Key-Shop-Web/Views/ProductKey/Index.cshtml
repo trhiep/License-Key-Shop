@@ -1,0 +1,80 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid pt-5" style="margin-top: 50px; margin-bottom: 50px">
+    <div class="container">
+        <div class="row g-5">
+            @{
+                if (ViewBag.keyList != null)
+                {
+                    <div class="col-lg-12">
+                        <div>
+                            <h2 class="text-center text-uppercase">Product Key List</h2>
+                        </div>
+                        <div style="margin: 10px 0px">
+                            <a asp-action="Create" asp-controller="ProductKey" class="btn btn-primary"><i class="fa fa-solid fa-plus"></i> Add Product Key</a>
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Key Value</th>
+                                    <th scope="col">Expiration Date</th>
+                                    <th scope="col" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in @ViewBag.keyList)
+                                    {
+                                        <tr>
+                                            <form asp-action="Update" asp-controller="ProductKey" method="post">
+                                            <td scope="row">
+                                                    @(item.KeyId)
+                                            </td>
+                                            <td scope="row">
+                                                    @{
+                                                        foreach (var prd in ViewBag.prdList)
+                                                        {
+                                                            if (prd.ProductId == item.ProductProductId)
+                                                            {
+                                                            <img class="me-lg-2" src="~/WebStorage/Images/ProductImages/@(prd.Image)" alt="" style="width: 40px; height: 40px;"> @(prd.ProductName)
+                                                            }
+                                                        }
+                                                    }
+                                            </td>
+                                            <td scope="row">
+                                                    @(item.getFormatedKeyValue())
+                                            </td>
+                                            <td scope="row">
+                                                    @{
+                                                        if (item.ExpirationDate == null || item.ExpirationDate.Equals(""))
+                                                        {
+                                                            @("Unlimited")
+                                                        } else
+                                                        {
+                                                            @(item.ExpirationDate)
+                                                        }
+                                                    }
+                                            </td>
+                                            <td scope="row" class="text-center">
+                                                <a asp-action="Update" asp-controller="ProductKey" asp-route-id="@item.KeyId" class="btn btn-success">Update</a>
+                                                <a asp-action="Delete" asp-controller="productKey" asp-route-id="@item.KeyId" class="btn btn-danger">Delete</a>
+                                            </td>
+                                            </form>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+

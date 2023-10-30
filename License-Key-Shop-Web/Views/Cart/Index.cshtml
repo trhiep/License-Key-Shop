@@ -1,0 +1,79 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="row container-fluid" style="margin-top: 30px">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="font-size: 30px; font-weight: bold" scope="col">SHOPPING CART</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="table-content">
+            @{
+                if (@ViewBag.cartItemList == null)
+                {
+                    <div class="text-center">
+                        <img src="~/img/emptyCart.png" width="400px" alt="emptyCart" />
+                        <h5 style="margin-top: 20px;
+                                                                margin-bottom: 20px;
+                                                                font-weight: bold;
+                                                                font-size: 24px">
+                            YOUR CART IS EMPTY
+                        </h5>
+                        <a href="viewProducts" class="btn btn-success">SHOPPING NOW</a>
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">Product name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                                <th scope="col" style="width: 200px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                int i = 1;
+                                foreach (var item in ViewBag.cartItemList)
+                                {
+                                    <form action="updateCart" method="POST">
+                                    <tr>
+                                        <td scope="row">@(i)</td>
+                                        <td><a style="text-decoration: none; color: black" href="/Product/Details/@(item.ProductInf.ProductId)" target="_blank"><img class="me-lg-2" src="~/WebStorage/Images/ProductImages/@(item.ProductInf.Image)" alt="" style="width: 40px; height: 40px;">  @(item.ProductInf.ProductName)</a></td>
+                                        <td>@(item.Quantity)</td>
+                                        <td>@(item.ProductInf.GetFormattedPrice()) VND</td>
+                                        <td class="text-center"><a style="margin: 0px 5px" class="btn btn-danger py-2 px-3" href="/Cart/Placeorder"><i class="bi bi-trash"></i></a></td>
+                                    </tr>
+                                    </form>
+                                    i++;
+                                }
+                            }
+                            <tr>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col" style="font-size: 18px">@(ViewBag.cartTotal.GetFormattedTotal()) VND</th>
+                                <th scope="col" class="text-center"><a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href="/Cart/Placeorder"><i class="bi bi-cash-stack"></i> Place Order</a></th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                }
+            }
+        </div>
+        <div class="text-center">
+            
+        </div>
+    </div>
+</div>
+

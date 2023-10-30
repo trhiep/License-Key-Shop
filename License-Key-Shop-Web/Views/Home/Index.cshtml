@@ -1,4 +1,4 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
@@ -19,69 +19,37 @@
     </div>
 </div>
 <!-- Offer End -->
-
 <!-- Products Start -->
 <div class="container-fluid py-5">
     <div class="container">
         <div class="border-start border-5 border-success ps-5 mb-5" style="max-width: 600px;">
-            <h2 class="display-5 text-uppercase mb-0">Our Featured Products</h2>
+            <h2 class="display-5 text-uppercase mb-0">Our Products</h2>
         </div>
         <div class="owl-carousel product-carousel">
-            <div class="pb-5">
-                <div class="product-item position-relative bg-light d-flex flex-column text-center">
-                    <img class="img-fluid mb-4" src="img/product-1.png" alt="">
-                    <h6 class="text-uppercase">Quality Pet Foods</h6>
-                    <h5 class="text-success mb-0">$199.00</h5>
-                    <div class="btn-action d-flex justify-content-center">
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-cart"></i></a>
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-eye"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="pb-5">
-                <div class="product-item position-relative bg-light d-flex flex-column text-center">
-                    <img class="img-fluid mb-4" src="img/product-2.png" alt="">
-                    <h6 class="text-uppercase">Quality Pet Foods</h6>
-                    <h5 class="text-success mb-0">$199.00</h5>
-                    <div class="btn-action d-flex justify-content-center">
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-cart"></i></a>
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-eye"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="pb-5">
-                <div class="product-item position-relative bg-light d-flex flex-column text-center">
-                    <img class="img-fluid mb-4" src="img/product-3.png" alt="">
-                    <h6 class="text-uppercase">Quality Pet Foods</h6>
-                    <h5 class="text-success mb-0">$199.00</h5>
-                    <div class="btn-action d-flex justify-content-center">
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-cart"></i></a>
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-eye"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="pb-5">
-                <div class="product-item position-relative bg-light d-flex flex-column text-center">
-                    <img class="img-fluid mb-4" src="img/product-4.png" alt="">
-                    <h6 class="text-uppercase">Quality Pet Foods</h6>
-                    <h5 class="text-success mb-0">$199.00</h5>
-                    <div class="btn-action d-flex justify-content-center">
-                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href=""><i class="bi bi-cart"></i></a>
-                        <a style="margin: 0px 5px"class="btn btn-success py-2 px-3" href=""><i class="bi bi-eye"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="pb-5">
-                <div class="product-item position-relative bg-light d-flex flex-column text-center">
-                    <img class="img-fluid mb-4" src="img/product-2.png" alt="">
-                    <h6 class="text-uppercase">Quality Pet Foods</h6>
-                    <h5 class="text-success mb-0">$199.00</h5>
-                    <div class="btn-action d-flex justify-content-center">
-                        <a class="btn btn-success py-2 px-3" href=""><i class="bi bi-cart"></i></a>
-                        <a class="btn btn-success py-2 px-3" href=""><i class="bi bi-eye"></i></a>
-                    </div>
-                </div>
-            </div>
+
+            @{
+                if (@ViewBag.randomProduct != null)
+                {
+                    foreach (var prd in ViewBag.randomProduct)
+                    {
+                        <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                            <div class="pb-5">
+                                <div class="product-item position-relative bg-light d-flex flex-column text-center" style="height: 400px; position: relative;">
+                                    <img class="img-fluid mb-4" style="height: 250px" src="~/WebStorage/Images/ProductImages/@(prd.Image)" alt="Product Image">
+                                    <h6 class="text-uppercase">@(prd.ProductName)</h6>
+                                    <h5 class="text-success mb-0" style="bottom: 25px; right: 0; left: 0; text-align: center; position: absolute">@(prd.GetFormattedPrice()) @(ViewBag.currencyUnit)</h5>
+                                    <input type="hidden" name="productId" value="@(prd.ProductId)" />
+                                    <input type="hidden" name="currentPage" value="/Home" />
+                                    <div class="btn-action d-flex justify-content-center">
+                                        <button type="submit" style="margin: 0px 5px" class="btn btn-success py-2 px-3"><i class="bi bi-cart"></i></button>
+                                        <a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href="/Product/Details/@(prd.ProductId)"><i class="bi bi-eye"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                }
+            }
         </div>
     </div>
 </div>

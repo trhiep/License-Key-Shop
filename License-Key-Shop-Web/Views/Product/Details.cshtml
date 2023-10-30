@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="row" style="margin-top: 100px">
+    @{
+        if (ViewBag.prdDetails != null)
+        {
+            <div class="col-md-5">
+                <img style="border-radius: 30px" src="~/WebStorage/Images/ProductImages/@(ViewBag.prdDetails.Image)" width="450" alt="alt" />
+            </div>
+            <div class="col-md-7">
+                <h2>@(ViewBag.prdDetails.ProductName)</h2>
+                <p>Rate: 5.0/5.0</p>
+                <p align="justify">@Html.Raw(ViewBag.prdDetails.Description)</p>
+                <h3>@(ViewBag.prdDetails.GetFormattedPrice()) VND</h3>
+                <form method="post" action="addToCart">
+                    <input type="hidden" name="productID" value="@(ViewBag.prdDetails.ProductId)" />
+                    <input type="hidden" name="currentPage" value="/Product/Details/@(ViewBag.prdDetails.ProductId)" /><br>
+                    <input style="margin-top: 10px" class="btn btn-success" type="submit" value="Add to cart" />
+                </form>
+            </div>
+        }
+    }
+</div>
+
