@@ -1,0 +1,95 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="row container" style="margin-top: 50px; font-size: 26px">
+    <div class="col-md-12">
+        <h3 class="balanceDisplay">
+            <a class="btn btn-success" style="font-size: 26px">
+                <i class="bi bi-cash-stack"></i> YOUR BALANCE:
+                @{
+                    if (ViewBag.userBalance.Amount != null)
+                    {
+                        @(ViewBag.userBalance.Amount + " VND")
+                    }
+                    else
+                    {
+                        @("0 VND");
+                    }
+                }
+            </a>
+        </h3>
+    </div>
+</div>
+
+<div class="row container">
+    <div class="col-md-9">
+        <div style="margin-top: 200px;">
+            <h3 style="font-weight: bolder;margin-bottom: 10px">DEPOSIT INSTRUCTIONS</h3>
+            <p style="font-size: 24px">
+                Step 1: Use any banking app to scan the QR code next to it and make a payment with the message: <a style="color: red; font-weight: bold; font-size: 28px">DEPOSIT_@(ViewBag.userInf.Username)</a>.<br>
+                Step 2: Wait for transaction confirmation by admin. Confirmation will take less than 30 minutes.<br>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="text-center" style="margin-top: 65px">
+            <img src="~/img/bank.jpg" width="430" height="572" alt="bank" />
+        </div>
+    </div>
+</div>
+
+<div class="row container-fluid" style="margin-top: 40px">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="font-size: 24px">DEPOSIT HISTORY LIST</th>
+                </tr>
+            </thead>
+        </table>
+
+
+        @{
+            if (ViewBag.depositHistoryList == null)
+            {
+                <div class="text-center">
+                    <img src="~/img/emptyTask.png" width="250" height="250" alt="emptyTask" />
+                    <h5 style="margin-top: 20px">YOU DO NOT HAVE ANY DEPOSIT HISTORY NOW</h5>
+                </div>
+            }
+            else
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action Date</th>
+                            <th scope="col">Action By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var depo in @ViewBag.depositHistoryList)
+                            {
+                                <tr>
+                                    <th scope="row">@(i)</th>
+                                    <td>@(depo.Amount)</td>
+                                    <td>@(depo.ActionDate)</td>
+                                    <td>@(depo.ActionBy)</td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+    <div class="col-md-1"></div>
+</div>

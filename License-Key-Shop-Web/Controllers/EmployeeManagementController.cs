@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace License_Key_Shop_Web.Controllers
 {
-    public class AdminController : Controller
+    public class EmployeeManagementController : Controller
     {
 
-        public bool CanAccessThisAdminPage()
+        public bool CanAccessThisManagementPage()
         {
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
@@ -32,25 +32,19 @@ namespace License_Key_Shop_Web.Controllers
 
         public IActionResult Index()
         {
-            bool canAccess = CanAccessThisAdminPage();
+            bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                string? useAcc = HttpContext.Session.GetString("userAcc");
-                if (useAcc != null)
-                {
-                    LoadUserInf(useAcc);
-                }
+                var keyList = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.ToArray();
+                ViewBag.keyList = keyList;
+                var prdList = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.ToArray();
+                ViewBag.prdList = prdList;
                 return View();
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
-        }
-
-        public void LoadUserInf(string username)
-        {
-            
         }
     }
 }

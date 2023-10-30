@@ -40,6 +40,9 @@
             selector: '#tinymce'
         });
     </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
@@ -57,24 +60,37 @@
                 <a href="/Admin" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="me-2"></i> LS Admin</h3>
                 </a>
-                <div class="d-flex align-items-center ms-4 mb-4">
-                    <div class="ms-3">
-                        <h6 class="mb-0">Tran Hiep</h6>
-                        <span>Admin</span>
-                    </div>
-                </div>
+                    @{
+                        if (@ViewBag.userInf != null)
+                        {
+                        <div class="d-flex align-items-center ms-4 mb-4">
+                            <div class="ms-3">
+                                <h6 class="mb-0">@(ViewBag.userInf.FirstName)  @(ViewBag.userInf.LastName)</h6>
+                                @{
+                                    foreach (var role in ViewBag.roleList)
+                                    {
+                                        if (role.RoleId == ViewBag.userInf.RoleRoleId)
+                                        {
+                                            <span>@(role.RoleName)</span>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        }
+                    }
                 <div class="navbar-nav w-100">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Users</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item" style="margin-left: 20px">Employees</a>
-                            <a href="typography.html" class="dropdown-item" style="margin-left: 20px">Customers</a>
+                            <a href="/EmployeeManagement" class="dropdown-item" style="margin-left: 20px">Employees</a>
+                            <a href="/CustomerManagement" class="dropdown-item" style="margin-left: 20px">Customers</a>
                         </div>
                     </div>
                     <a href="/CategoryManagement" class="nav-item nav-link"><i class="fa fa-solid fa-folder me-2"></i>Category</a>
                     <a href="/ProductManagement" class="nav-item nav-link"><i class="fa fa-regular fa-box me-2"></i>Product</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-solid fa-key me-2"></i>Key Storage</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-solid fa-file-invoice-dollar me-2"></i>Deposit</a>
+                    <a href="/ProductKey" class="nav-item nav-link"><i class="fa fa-solid fa-key me-2"></i>Key Storage</a>
+                    <a href="/DepositManagement" class="nav-item nav-link"><i class="fa fa-solid fa-file-invoice-dollar me-2"></i>Deposit</a>
                 </div>
             </nav>
         </div>
@@ -93,11 +109,19 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="~/img/user.png" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">Tran Hiep</span>
+                            @{
+                                if (@ViewBag.userInf != null)
+                                {
+                                    <span class="d-none d-lg-inline-flex">@(ViewBag.userInf.FirstName)  @(ViewBag.userInf.LastName)</span>
+                                } else
+                                {
+                                    <span class="d-none d-lg-inline-flex">Manager</span>
+                                }
+                            }
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="/Logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -115,7 +139,7 @@
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="/Home">License Shop</a>, All Right Reserved.
+                            &copy; <a href="/Logout">License Shop</a>, All Right Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
@@ -145,6 +169,12 @@
     <script src="~/js/admin-main.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        flatpickr("#dateInputStr", {
+            dateFormat: "d-m-Y"
+        });
+    </script>
 </body>
 
 </html>

@@ -8,10 +8,8 @@ namespace License_Key_Shop_Web.Models
         public UserHe173252()
         {
             BalanceHistoryHe173252s = new HashSet<BalanceHistoryHe173252>();
-            DepositRequestHe173252s = new HashSet<DepositRequestHe173252>();
+            DepositHistoryHe173252s = new HashSet<DepositHistoryHe173252>();
             OrderHistoryHe173252s = new HashSet<OrderHistoryHe173252>();
-            ProductRateHe173252s = new HashSet<ProductRateHe173252>();
-            UserBalanceHe173252s = new HashSet<UserBalanceHe173252>();
         }
 
         public string FirstName { get; set; } = null!;
@@ -25,10 +23,9 @@ namespace License_Key_Shop_Web.Models
 
         public virtual RoleHe173252 RoleRole { get; set; } = null!;
         public virtual CartHe173252? CartHe173252 { get; set; }
+        public virtual UserBalanceHe173252? UserBalanceHe173252 { get; set; }
         public virtual ICollection<BalanceHistoryHe173252> BalanceHistoryHe173252s { get; set; }
-        public virtual ICollection<DepositRequestHe173252> DepositRequestHe173252s { get; set; }
+        public virtual ICollection<DepositHistoryHe173252> DepositHistoryHe173252s { get; set; }
         public virtual ICollection<OrderHistoryHe173252> OrderHistoryHe173252s { get; set; }
-        public virtual ICollection<ProductRateHe173252> ProductRateHe173252s { get; set; }
-        public virtual ICollection<UserBalanceHe173252> UserBalanceHe173252s { get; set; }
     }
 }

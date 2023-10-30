@@ -1,8 +1,12 @@
+using License_Key_Shop_Web.MyInterface;
+using License_Key_Shop_Web.Utils;
 using Microsoft.AspNetCore.Http.Features;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

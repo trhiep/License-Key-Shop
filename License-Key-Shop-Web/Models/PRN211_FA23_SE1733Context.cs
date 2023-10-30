@@ -25,12 +25,11 @@ namespace License_Key_Shop_Web.Models
         public virtual DbSet<CartHe173252> CartHe173252s { get; set; } = null!;
         public virtual DbSet<CartItemHe173252> CartItemHe173252s { get; set; } = null!;
         public virtual DbSet<CategoryHe173252> CategoryHe173252s { get; set; } = null!;
-        public virtual DbSet<DepositRequestHe173252> DepositRequestHe173252s { get; set; } = null!;
+        public virtual DbSet<DepositHistoryHe173252> DepositHistoryHe173252s { get; set; } = null!;
         public virtual DbSet<OrderDetailHe173252> OrderDetailHe173252s { get; set; } = null!;
         public virtual DbSet<OrderHistoryHe173252> OrderHistoryHe173252s { get; set; } = null!;
         public virtual DbSet<ProductHe173252> ProductHe173252s { get; set; } = null!;
         public virtual DbSet<ProductKeyHe173252> ProductKeyHe173252s { get; set; } = null!;
-        public virtual DbSet<ProductRateHe173252> ProductRateHe173252s { get; set; } = null!;
         public virtual DbSet<RoleHe173252> RoleHe173252s { get; set; } = null!;
         public virtual DbSet<UserBalanceHe173252> UserBalanceHe173252s { get; set; } = null!;
         public virtual DbSet<UserHe173252> UserHe173252s { get; set; } = null!;
@@ -136,16 +135,20 @@ namespace License_Key_Shop_Web.Models
                 entity.Property(e => e.CategoryName).HasMaxLength(255);
             });
 
-            modelBuilder.Entity<DepositRequestHe173252>(entity =>
+            modelBuilder.Entity<DepositHistoryHe173252>(entity =>
             {
-                entity.HasKey(e => e.RequestId)
+                entity.HasKey(e => e.DepositId)
                     .HasName("DepositRequest_HE173252_pk");
 
-                entity.ToTable("DepositRequest_HE173252");
+                entity.ToTable("DepositHistory_HE173252");
 
-                entity.Property(e => e.RequestId).HasColumnName("RequestID");
+                entity.Property(e => e.DepositId).HasColumnName("DepositID");
 
-                entity.Property(e => e.RequestDate).HasColumnType("datetime");
+                entity.Property(e => e.ActionBy)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ActionDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UserUsername)
                     .HasMaxLength(25)
@@ -153,7 +156,7 @@ namespace License_Key_Shop_Web.Models
                     .HasColumnName("User_Username");
 
                 entity.HasOne(d => d.UserUsernameNavigation)
-                    .WithMany(p => p.DepositRequestHe173252s)
+                    .WithMany(p => p.DepositHistoryHe173252s)
                     .HasForeignKey(d => d.UserUsername)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("DepositRequest_HE173252_User_HE173252");
@@ -235,7 +238,11 @@ namespace License_Key_Shop_Web.Models
 
                 entity.Property(e => e.KeyId).HasColumnName("KeyID");
 
-                entity.Property(e => e.ExpirationDate).HasColumnType("date");
+                entity.Property(e => e.ExpirationDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsExpired).HasColumnName("isExpired");
 
                 entity.Property(e => e.ProductKey)
                     .HasMaxLength(255)
@@ -248,39 +255,6 @@ namespace License_Key_Shop_Web.Models
                     .HasForeignKey(d => d.ProductProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("ProductKey_HE173252_Product_HE173252");
-            });
-
-            modelBuilder.Entity<ProductRateHe173252>(entity =>
-            {
-                entity.HasKey(e => e.RateId)
-                    .HasName("ProductRate_HE173252_pk");
-
-                entity.ToTable("ProductRate_HE173252");
-
-                entity.Property(e => e.RateId).HasColumnName("RateID");
-
-                entity.Property(e => e.Comment).HasMaxLength(300);
-
-                entity.Property(e => e.ProductProductId).HasColumnName("Product_ProductID");
-
-                entity.Property(e => e.RateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.UserUsername)
-                    .HasMaxLength(25)
-                    .IsUnicode(false)
-                    .HasColumnName("User_Username");
-
-                entity.HasOne(d => d.ProductProduct)
-                    .WithMany(p => p.ProductRateHe173252s)
-                    .HasForeignKey(d => d.ProductProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ProductRate_HE173252_Product_HE173252");
-
-                entity.HasOne(d => d.UserUsernameNavigation)
-                    .WithMany(p => p.ProductRateHe173252s)
-                    .HasForeignKey(d => d.UserUsername)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ProductRate_HE173252_User_HE173252");
             });
 
             modelBuilder.Entity<RoleHe173252>(entity =>
@@ -297,7 +271,7 @@ namespace License_Key_Shop_Web.Models
 
             modelBuilder.Entity<UserBalanceHe173252>(entity =>
             {
-                entity.HasKey(e => new { e.UserUsername, e.Amount })
+                entity.HasKey(e => e.UserUsername)
                     .HasName("UserBalance_HE173252_pk");
 
                 entity.ToTable("UserBalance_HE173252");
@@ -308,8 +282,8 @@ namespace License_Key_Shop_Web.Models
                     .HasColumnName("User_Username");
 
                 entity.HasOne(d => d.UserUsernameNavigation)
-                    .WithMany(p => p.UserBalanceHe173252s)
-                    .HasForeignKey(d => d.UserUsername)
+                    .WithOne(p => p.UserBalanceHe173252)
+                    .HasForeignKey<UserBalanceHe173252>(d => d.UserUsername)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("UserBalance_HE173252_User_HE173252");
             });

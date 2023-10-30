@@ -10,15 +10,14 @@ namespace License_Key_Shop_Web.Models
         {
             CartItemHe173252s = new HashSet<CartItemHe173252>();
             ProductKeyHe173252s = new HashSet<ProductKeyHe173252>();
-            ProductRateHe173252s = new HashSet<ProductRateHe173252>();
         }
 
         public int ProductId { get; set; }
         public string ProductName { get; set; } = null!;
+        public string Image { get; set; } = null!;
         public double Price { get; set; }
         public string Description { get; set; } = null!;
         public int CategoryCategoryId { get; set; }
-        public string Image { get; set; } = null!;
 
         public string GetFormattedPrice()
         {
@@ -53,6 +52,5 @@ namespace License_Key_Shop_Web.Models
         public virtual CategoryHe173252 CategoryCategory { get; set; } = null!;
         public virtual ICollection<CartItemHe173252> CartItemHe173252s { get; set; }
         public virtual ICollection<ProductKeyHe173252> ProductKeyHe173252s { get; set; }
-        public virtual ICollection<ProductRateHe173252> ProductRateHe173252s { get; set; }
     }
 }
