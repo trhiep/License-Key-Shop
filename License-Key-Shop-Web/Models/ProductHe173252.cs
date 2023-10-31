@@ -18,7 +18,6 @@ namespace License_Key_Shop_Web.Models
         public double Price { get; set; }
         public string Description { get; set; } = null!;
         public int CategoryCategoryId { get; set; }
-
         public string GetFormattedPrice()
         {
             string amount = this.Price.ToString();
@@ -48,7 +47,6 @@ namespace License_Key_Shop_Web.Models
                 return formattedAmount.ToString() + amount.Substring(endPoint);
             }
         }
-
         public virtual CategoryHe173252 CategoryCategory { get; set; } = null!;
         public virtual ICollection<CartItemHe173252> CartItemHe173252s { get; set; }
         public virtual ICollection<ProductKeyHe173252> ProductKeyHe173252s { get; set; }

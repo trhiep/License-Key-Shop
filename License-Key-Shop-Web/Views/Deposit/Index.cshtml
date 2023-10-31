@@ -10,13 +10,13 @@
             <a class="btn btn-success" style="font-size: 26px">
                 <i class="bi bi-cash-stack"></i> YOUR BALANCE:
                 @{
-                    if (ViewBag.userBalance.Amount != null)
+                    if (ViewBag.userBalance.Amount != null || ViewBag.userBalance.Amount != 0)
                     {
-                        @(ViewBag.userBalance.Amount + " VND")
+                        @(ViewBag.userBalance.GetFormattedAmount() + " VND")
                     }
                     else
                     {
-                        @("0 VND");
+                        @("0 VND")
                     }
                 }
             </a>

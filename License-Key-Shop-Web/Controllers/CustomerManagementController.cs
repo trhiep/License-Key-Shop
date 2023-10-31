@@ -1,5 +1,6 @@
 ﻿using License_Key_Shop_Web.Models;
 using License_Key_Shop_Web.MyInterface;
+using License_Key_Shop_Web.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace License_Key_Shop_Web.Controllers
@@ -61,15 +62,32 @@ namespace License_Key_Shop_Web.Controllers
             }
         }
 
-        
-        public async Task<IActionResult> ResetPassword()
-        {
-            var receiver = "hieptran.pa@gmail.com";
-            var subject = "Test mail C#";
-            var message = "<p><strong>Hello&nbsp;</strong></p>\r\n<p><em><strong>My name is Hiep</strong></em></p>\r\n<p>Nice to meet you</p>";
 
-            await _emailSender.SendEmailAsync(receiver, subject, message, true);
-            return View();
+        public async Task<IActionResult> ResetPassword(string Id)
+        {
+            string newPass = getRandomPassword();
+            var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(Id);
+            userInf.Password = EncryptionMethods.SHA256Encrypt(newPass);
+            string message = "<p>Hello <strong>"+userInf.FirstName + " " + userInf.LastName+"</strong></p>\r\n<p>This is your new password: <strong>"+ newPass + "</strong></p>";
+            await _emailSender.SendEmailAsync(userInf.Email, "Your password is resetted!", message, true);
+            PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Update(userInf);
+            PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+            return RedirectToAction("Index", "CustomerManagement");
+        }
+
+        private string getRandomPassword()
+        {
+
+            const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&";
+            Random random = new Random();
+            char[] randomChars = new char[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                randomChars[i] = characters[random.Next(characters.Length)];
+            }
+
+            return new string(randomChars);
         }
     }
 }

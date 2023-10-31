@@ -171,7 +171,9 @@ namespace License_Key_Shop_Web.Models
 
                 entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
 
-                entity.Property(e => e.ExpirationDate).HasColumnType("date");
+                entity.Property(e => e.ExpirationDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.OrderHistoryOrderId).HasColumnName("OrderHistory_OrderID");
 

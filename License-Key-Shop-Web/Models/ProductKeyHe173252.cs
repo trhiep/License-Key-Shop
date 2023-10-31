@@ -10,6 +10,10 @@ namespace License_Key_Shop_Web.Models
         public string ProductKey { get; set; } = null!;
         public string? ExpirationDate { get; set; }
         public bool IsExpired { get; set; }
+        public string getFormatedKeyValue()
+        {
+            return this.ProductKey.Substring(0, 5) + "....." + this.ProductKey.Substring(this.ProductKey.Length - 6);
+        }
 
         public virtual ProductHe173252 ProductProduct { get; set; } = null!;
     }
