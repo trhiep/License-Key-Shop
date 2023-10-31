@@ -1,0 +1,93 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+<div class="container-xl px-4 mt-4" style="margin-top: 50px">
+
+    <div class="card mb-4">
+        <div class="card-header">Account Details</div>
+        <div class="card-body">
+            <form asp-action="ChangeInf" asp-controller="User" method="POST">
+                <!-- Form Group (username)-->
+                <div class="mb-3">
+                    <label class="small mb-1" for="inputUsername">Username</label>
+                    <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="@(ViewBag.userInf.Username)" readonly>
+                </div>
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                    <!-- Form Group (first name)-->
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputFirstName">First name</label>
+                        <input class="form-control" id="inputFirstName" type="text" name="firstname" placeholder="Enter your first name" value="@(ViewBag.userInf.FirstName)" pattern="[A-Za-z ]+" title="First Name can contains upper and lowercase character only." required>
+                    </div>
+                    <!-- Form Group (last name)-->
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputLastName">Last name</label>
+                        <input class="form-control" id="inputLastName" type="text" name="lastname" placeholder="Enter your last name" value="@(ViewBag.userInf.LastName)" pattern="[A-Za-z ]+" title="Last Name can contains upper and lowercase character only." required>
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <!-- Form Group (organization name)-->
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputEmailAddress">Email</label>
+                        <input class="form-control" id="inputEmailAddress" type="email" name="email" placeholder="Enter your email address" value="@(ViewBag.userInf.Email)" pattern="[a-zA-Z0-9._%+\-]+@@[a-z0-9.\-]+\.[a-z]{2,}$" title="Example: name@mail.com" required>
+                    </div>
+                </div>
+                @{
+                    if (TempData["updateUserInfSuccess"] != null)
+                    {
+                        <span style="color: green; font-style: italic">*@(TempData["updateUserInfSuccess"])</span><br>
+                    }
+                }
+                @{
+                    if (ViewBag.userInf.RoleRoleId == 1)
+                    {
+                        <button class="btn btn-success" type="submit" name="btAction">Save changes</button>
+                    } else
+                    {
+                        <button class="btn btn-primary" type="submit" name="btAction">Save changes</button>
+                    }
+                }
+                
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">Change Password</div>
+        <div class="card-body">
+            <form asp-action="ChangePass" asp-controller="User" method="POST">
+                <input type="hidden" name="username" value="${customerAcc.username}">
+                <div class="mb-3">
+                    <label class="small mb-1">Old Password</label>
+                    <input class="form-control" type="password" name="oldPass" placeholder="Enter your old password" required>
+                    <label class="small mb-1">New Password</label>
+                    <input class="form-control" type="password" name="newPass" placeholder="Enter your new password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+                    <label class="small mb-1">Confirm New Password</label>
+                    <input class="form-control" type="password" name="confirmPass" placeholder="Confirm your new password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+                    @{
+                        if (TempData["updatePassSuccsess"] != null)
+                        {
+                            <span style="color: green; font-style: italic">*@(TempData["updatePassSuccsess"])</span>
+                        }
+                        if (TempData["updatePassErr"] != null)
+                        {
+                            <span style="color: red; font-style: italic">*@(TempData["updatePassErr"])</span>
+                        }
+                    }
+                </div>
+                @{
+                    if (ViewBag.userInf.RoleRoleId == 1)
+                    {
+                        <button class="btn btn-success" type="submit">Save</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    }
+                }
+            </form>
+        </div>
+    </div>
+</div></>
