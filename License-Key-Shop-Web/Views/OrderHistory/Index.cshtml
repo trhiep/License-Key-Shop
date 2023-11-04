@@ -1,0 +1,46 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="container-xl px-4 mt-4" style="margin-top: 50px">
+
+    @{
+        foreach (var order in ViewBag.orderHis)
+        {
+            <div class="card mb-4">
+                <div class="card-header" style="font-weight: bold">Order #@(order.OrderId)</div>
+                <div class="card-body">
+                    <input type="hidden" name="username" value="${customerAcc.username}">
+
+                    @{
+                        foreach (var detail in order.OrderDetailHe173252)
+                        {
+                            <div class="mb-3" style="margin-top: 30px; margin-bottom: 30px">
+                                <label class="small mb-1">Product Name</label>
+                                <input class="form-control" type="text" value="@(detail.ProductSoldName)" readonly>
+                                <label class="small mb-1">Key Value</label>
+                                <input class="form-control" type="text" value="@(detail.ProductKey)" readonly>
+                                <label class="small mb-1">Expiration Date</label>
+                                @{
+                                    if (detail.ExpirationDate == null)
+                                    {
+                                        <input class="form-control" type="text" value="Unlimited" readonly>
+                                    } else
+                                    {
+                                        <input class="form-control" type="text" value="@(detail.ExpirationDate)" readonly>
+                                    }
+                                }
+                               
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
