@@ -13,12 +13,14 @@
             </div>
             <div class="col-md-7">
                 <h2>@(ViewBag.prdDetails.ProductName)</h2>
-                <p align="justify">@Html.Raw(ViewBag.prdDetails.Description)</p>
+                <div style="text-align: justify">
+                    <p>@Html.Raw(ViewBag.prdDetails.Description)</p>
+                </div>
                 <h3>@(ViewBag.prdDetails.GetFormattedPrice()) VND</h3>
                 <form method="post" asp-action="addToCart" asp-controller="Cart">
                     <input type="hidden" name="productID" value="@(ViewBag.prdDetails.ProductId)" />
                     <input type="hidden" name="currentPage" value="/Product/Details/@(ViewBag.prdDetails.ProductId)" /><br>
-                    <input style="margin-top: 10px" class="btn btn-success" type="submit" value="Add to cart" />
+                    <button class="btn btn-success" type="submit"><i class="bi bi-cart"></i> Add to cart</button>
                 </form>
             </div>
         }
