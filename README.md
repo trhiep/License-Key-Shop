@@ -7,4 +7,4 @@ References
 1. Website template: [HTML Codex](https://htmlcodex.com/pet-shop-website-template/)
 
 Homepage
-![image](https://github.com/trhiep/License-Key-Shop/assets/76655009/ac5db88f-2f77-40d9-b7cd-87812173f51b)
+![screencapture-localhost-7009-2023-12-08-14_55_03](https://github.com/trhiep/License-Key-Shop/assets/76655009/44b1b8dc-7f73-4e3a-ad88-5e69604c720d)
