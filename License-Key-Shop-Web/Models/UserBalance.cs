@@ -4,7 +4,7 @@ using System.Text;
 
 namespace License_Key_Shop_Web.Models
 {
-    public partial class UserBalanceHe173252
+    public partial class UserBalance
     {
         public string UserUsername { get; set; } = null!;
         public double Amount { get; set; }
@@ -37,6 +37,7 @@ namespace License_Key_Shop_Web.Models
                 return formattedAmount.ToString() + amount.Substring(endPoint);
             }
         }
-        public virtual UserHe173252 UserUsernameNavigation { get; set; } = null!;
+
+        public virtual User UserUsernameNavigation { get; set; } = null!;
     }
 }

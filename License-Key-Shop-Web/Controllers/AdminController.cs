@@ -11,12 +11,12 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     if (userInf.RoleRoleId != 1 && userInf.IsActive == true)
                     {
-                        var roleList = PRN211_FA23_SE1733Context.INSTANCE.RoleHe173252s.ToArray();
+                        var roleList = LicenseShopDBContext.INSTANCE.Roles.ToArray();
                         ViewBag.userInf = userInf;
                         ViewBag.roleList = roleList;
                         return true;

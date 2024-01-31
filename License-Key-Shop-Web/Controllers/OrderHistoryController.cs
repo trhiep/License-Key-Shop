@@ -11,12 +11,12 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     if (userInf.RoleRoleId == 1 && userInf.IsActive == true)
                     {
-                        var roleList = PRN211_FA23_SE1733Context.INSTANCE.RoleHe173252s.ToArray();
+                        var roleList = LicenseShopDBContext.INSTANCE.Roles.ToArray();
                         ViewBag.userInf = userInf;
                         ViewBag.roleList = roleList;
                         return true;
@@ -35,16 +35,16 @@ namespace License_Key_Shop_Web.Controllers
             if (canAccess)
             {
                 string? useAcc = HttpContext.Session.GetString("userAcc");
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
-                    var orderHis = PRN211_FA23_SE1733Context.INSTANCE.OrderHistoryHe173252s
+                    var orderHis = LicenseShopDBContext.INSTANCE.OrderHistories
                         .Where(order => order.UserUsername == userInf.Username)
                         .Select(entity => new
                         {
                             OrderId = entity.OrderId,
                             UserUsername = entity.UserUsername,
-                            OrderDetailHe173252 = entity.OrderDetailHe173252s
+                            OrderDetailHe173252 = entity.OrderDetails
                         })
                         .OrderByDescending(ord => ord.OrderId);
                     ViewBag.orderHis = orderHis;

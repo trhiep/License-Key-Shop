@@ -10,12 +10,12 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     if (userInf.RoleRoleId != 1 && userInf.IsActive == true)
                     {
-                        var roleList = PRN211_FA23_SE1733Context.INSTANCE.RoleHe173252s.ToArray();
+                        var roleList = LicenseShopDBContext.INSTANCE.Roles.ToArray();
                         ViewBag.userInf = userInf;
                         ViewBag.roleList = roleList;
                         return true;
@@ -33,7 +33,7 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var depositHistoryList = PRN211_FA23_SE1733Context.INSTANCE.DepositHistoryHe173252s.ToArray();
+                var depositHistoryList = LicenseShopDBContext.INSTANCE.DepositHistories.ToArray();
                 ViewBag.depositHistoryList = depositHistoryList;
                 return View();
             }
@@ -47,18 +47,18 @@ namespace License_Key_Shop_Web.Controllers
         public IActionResult Create(IFormCollection f)
         {
             string username = f["username"];
-            var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(username);
+            var userInf = LicenseShopDBContext.INSTANCE.Users.Find(username);
             if (userInf != null && userInf.IsActive == true && userInf.RoleRoleId == 1)
             {
                 float amount = float.Parse(f["amount"]);
                 string? useAcc = HttpContext.Session.GetString("userAcc");
                 DateTime timeNow = DateTime.Now;
 
-                var userBalInf = PRN211_FA23_SE1733Context.INSTANCE.UserBalanceHe173252s.Find(username);
+                var userBalInf = LicenseShopDBContext.INSTANCE.UserBalances.Find(username);
                 userBalInf.Amount += amount;
-                PRN211_FA23_SE1733Context.INSTANCE.UserBalanceHe173252s.Update(userBalInf);
+                LicenseShopDBContext.INSTANCE.UserBalances.Update(userBalInf);
 
-                BalanceHistoryHe173252 balHistory = new BalanceHistoryHe173252()
+                BalanceHistory balHistory = new BalanceHistory()
                 {
                     UserUsername = username,
                     Status = true,
@@ -67,17 +67,17 @@ namespace License_Key_Shop_Web.Controllers
                     ChangeDate = timeNow,
                     NewBalance = userBalInf.Amount
                 };
-                PRN211_FA23_SE1733Context.INSTANCE.Add(balHistory);
+                LicenseShopDBContext.INSTANCE.Add(balHistory);
 
-                DepositHistoryHe173252 depoHistoryInf = new DepositHistoryHe173252()
+                DepositHistory depoHistoryInf = new DepositHistory()
                 {
                     UserUsername = username,
                     Amount = amount,
                     ActionDate = timeNow,
                     ActionBy = useAcc
                 };
-                PRN211_FA23_SE1733Context.INSTANCE.DepositHistoryHe173252s.Add(depoHistoryInf);
-                PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                LicenseShopDBContext.INSTANCE.DepositHistories.Add(depoHistoryInf);
+                LicenseShopDBContext.INSTANCE.SaveChanges();
             }
             return Redirect("/DepositManagement/Index");
         }

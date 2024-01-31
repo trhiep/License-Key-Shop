@@ -8,7 +8,7 @@ namespace License_Key_Shop_Web.Controllers
     {
         public IActionResult Index()
         {
-            UserHe173252 userBasicInf = new UserHe173252() { FirstName = "", LastName = "", Username = "", Email = "" };
+            User userBasicInf = new User() { FirstName = "", LastName = "", Username = "", Email = "" };
             ViewBag.basicInf = userBasicInf;
             return View();
         }
@@ -25,14 +25,14 @@ namespace License_Key_Shop_Web.Controllers
             if (confirmPassword.Equals(password))
             {
 
-                var usr = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(username);
+                var usr = LicenseShopDBContext.INSTANCE.Users.Find(username);
                 if (usr != null)
                 {
                     ViewBag.registerUsernameErr = "This username already exists!";
                 }
                 else
                 {
-                    UserHe173252 userInf = new UserHe173252()
+                    User userInf = new User()
                     {
                         FirstName = firstName,
                         LastName = lastName,
@@ -43,19 +43,19 @@ namespace License_Key_Shop_Web.Controllers
                         IsActive = true,
                         IsVerified = false,
                     };
-                    PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Add(userInf);
-                    CartHe173252 userCart = new CartHe173252() {
+                    LicenseShopDBContext.INSTANCE.Users.Add(userInf);
+                    Cart userCart = new Cart() {
                         UserUsername = username,
                         Total = 0,
                     };
-                    PRN211_FA23_SE1733Context.INSTANCE.CartHe173252s.Add(userCart);
-                    UserBalanceHe173252 userBal = new UserBalanceHe173252()
+                    LicenseShopDBContext.INSTANCE.Carts.Add(userCart);
+                    UserBalance userBal = new UserBalance()
                     {
                         UserUsername = username,
                         Amount = 0,
                     };
-                    PRN211_FA23_SE1733Context.INSTANCE.UserBalanceHe173252s.Add(userBal);
-                    PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                    LicenseShopDBContext.INSTANCE.UserBalances.Add(userBal);
+                    LicenseShopDBContext.INSTANCE.SaveChanges();
                     return RedirectToAction("Index", "Login");
                 }
 
@@ -64,7 +64,7 @@ namespace License_Key_Shop_Web.Controllers
             {
                 ViewBag.registerPassErr = "Confirm password does not match!";
             }
-            UserHe173252 userBasicInf = new UserHe173252()
+            User userBasicInf = new User()
             {
                 FirstName = firstName,
                 LastName = lastName,

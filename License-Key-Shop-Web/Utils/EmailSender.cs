@@ -9,7 +9,7 @@ namespace License_Key_Shop_Web.Utils
         public Task SendEmailAsync(string email, string subject, string message, bool isBodyHtml)
         {
             var senderMail = "hieptvhe173252@gmail.com";
-            var senderPassword = "jkww fefa qlfl hnuw";
+            var senderPassword = "xrub dxja ykrc nwuk";
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 EnableSsl = true,

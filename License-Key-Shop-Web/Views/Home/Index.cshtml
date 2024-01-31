@@ -10,10 +10,10 @@
         <div class="row gx-5 justify-content-start">
             <div class="col-lg-7">
                 <div class="border-start border-5 border-success ps-5 mb-5">
-                    <h1 class="display-5 text-uppercase text-white mb-0">Buy Office 365 today to receive preferential prices.</h1>
+                    <h1 class="display-5 text-uppercase text-white mb-0">MUA OFFICE 365 BẢN QUYỀN NGAY HÔM NAY!</h1>
                 </div>
-                <p class="text-white mb-4">Microsoft 365 brings together premium Office apps like Word, Excel, and PowerPoint with 1 TB of OneDrive cloud storage, advanced security, and more, to help you get things done on any device.</p>
-                <a href="" class="btn btn-success py-md-3 px-md-5 me-3">Shop Now</a>
+                <p class="text-white mb-4">Microsoft 365 là bộ các ứng dụng Office cao cấp như Word, Excel và PowerPoint với 1 TB dung lượng lưu trữ đám mây OneDrive, bảo mật nâng cao và hơn thế nữa để giúp bạn hoàn thành công việc trên mọi thiết bị.</p>
+                <a href="" class="btn btn-success py-md-3 px-md-5 me-3">TÌM HIỀU NGAY</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
 <div class="container-fluid py-5">
     <div class="container">
         <div class="border-start border-5 border-success ps-5 mb-5" style="max-width: 600px;">
-            <h2 class="display-5 text-uppercase mb-0">Our Products</h2>
+            <h2 class="display-5 text-uppercase mb-0">SẢN PHẨM NỔI BẬT</h2>
         </div>
         <div class="owl-carousel product-carousel">
 
@@ -35,7 +35,7 @@
                         <form asp-action="AddToCart" asp-controller="Cart" method="post">
                             <div class="pb-5">
                                 <div class="product-item position-relative bg-light d-flex flex-column text-center" style="height: 400px; position: relative;">
-                                    <img class="img-fluid mb-4" style="height: 250px" src="~/WebStorage/Images/ProductImages/@(prd.Image)" alt="Product Image">
+                                    <img class="img-fluid mb-4" style="height: 250px" src="@(prd.Image)" alt="Product Image">
                                     <h6 class="text-uppercase">@(prd.ProductName)</h6>
                                     <h5 class="text-success mb-0" style="bottom: 25px; right: 0; left: 0; text-align: center; position: absolute">@(prd.GetFormattedPrice()) @(ViewBag.currencyUnit)</h5>
                                     <input type="hidden" name="productId" value="@(prd.ProductId)" />
@@ -54,3 +54,18 @@
     </div>
 </div>
 <!-- Products End -->
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                title: "CẢNH BÁO",
+                text: "TRANG WEB NÀY CHỈ ĐƯỢC SỬ DỤNG VỚI MỤC ĐÍCH HỌC TẬP. MỌI GIAO DỊCH TRÊN TRANG WEB NÀY ĐỀU LÀ MÔ PHỎNG VÀ KHÔNG CÓ GIÁ TRỊ THỰC.",
+                icon: "warning",
+                confirmButtonColor: "#198754",
+                iconColor: '#DC3545',
+                confirmButtonText: 'TÔI ĐÃ HIỂU',
+                allowOutsideClick: false,
+            });
+        });
+    </script>
+}

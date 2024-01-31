@@ -16,7 +16,7 @@
                     <form asp-action="AddToCart" asp-controller="Cart" method="post">
                         <div class="pb-5">
                             <div class="product-item position-relative bg-light d-flex flex-column text-center" style="height: 400px; position: relative;">
-                                <img class="img-fluid mb-4" style="height: 250px" src="~/WebStorage/Images/ProductImages/@(prd.Image)" alt="Product Image">
+                                <img class="img-fluid mb-4" style="height: 250px" src="@(prd.Image)" alt="Product Image">
                                 <h6 class="text-uppercase">@(prd.ProductName)</h6>
                                 <h5 class="text-success mb-0" style="bottom: 30px; right: 0; left: 0; text-align: center; position: absolute">@(prd.GetFormattedPrice()) @(ViewBag.currencyUnit) VND</h5>
                                 <input type="hidden" name="productId" value="@(prd.ProductId)" />

@@ -17,10 +17,10 @@ namespace License_Key_Shop_Web.Controllers
         {
             String username = f["username"];
             String password = f["password"];
-            var urs = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(username);
+            var urs = LicenseShopDBContext.INSTANCE.Users.Find(username);
             if (urs == null)
             {
-                ViewBag.loginUsernameErr = "Username does not exists!";
+                ViewBag.loginUsernameErr = "Tên đăng nhập không tồn tại!";
             }
             else
             {
@@ -38,7 +38,7 @@ namespace License_Key_Shop_Web.Controllers
                 }
                 else
                 {
-                    ViewBag.loginPasswordErr = "Incorrect password!";
+                    ViewBag.loginPasswordErr = "Sai mật khẩu!";
                 }
 
             }

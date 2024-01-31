@@ -4,23 +4,18 @@ using System.Text;
 
 namespace License_Key_Shop_Web.Models
 {
-    public partial class ProductHe173252
+    public partial class Cart
     {
-        public ProductHe173252()
+        public Cart()
         {
-            CartItemHe173252s = new HashSet<CartItemHe173252>();
-            ProductKeyHe173252s = new HashSet<ProductKeyHe173252>();
+            CartItems = new HashSet<CartItem>();
         }
 
-        public int ProductId { get; set; }
-        public string ProductName { get; set; } = null!;
-        public string Image { get; set; } = null!;
-        public double Price { get; set; }
-        public string Description { get; set; } = null!;
-        public int CategoryCategoryId { get; set; }
-        public string GetFormattedPrice()
+        public string UserUsername { get; set; } = null!;
+        public double Total { get; set; }
+        public string GetFormattedTotal()
         {
-            string amount = this.Price.ToString();
+            string amount = this.Total.ToString();
             StringBuilder formattedAmount = new StringBuilder();
             int endPoint = amount.IndexOf(".");
             if (endPoint < 0)
@@ -47,8 +42,8 @@ namespace License_Key_Shop_Web.Models
                 return formattedAmount.ToString() + amount.Substring(endPoint);
             }
         }
-        public virtual CategoryHe173252 CategoryCategory { get; set; } = null!;
-        public virtual ICollection<CartItemHe173252> CartItemHe173252s { get; set; }
-        public virtual ICollection<ProductKeyHe173252> ProductKeyHe173252s { get; set; }
+
+        public virtual User UserUsernameNavigation { get; set; } = null!;
+        public virtual ICollection<CartItem> CartItems { get; set; }
     }
 }

@@ -4,18 +4,16 @@ using System.Text;
 
 namespace License_Key_Shop_Web.Models
 {
-    public partial class CartHe173252
+    public partial class DepositHistory
     {
-        public CartHe173252()
-        {
-            CartItemHe173252s = new HashSet<CartItemHe173252>();
-        }
-
+        public int DepositId { get; set; }
         public string UserUsername { get; set; } = null!;
-        public double Total { get; set; }
-        public string GetFormattedTotal()
+        public double Amount { get; set; }
+        public DateTime ActionDate { get; set; }
+        public string ActionBy { get; set; } = null!;
+        public string GetFormattedAmount()
         {
-            string amount = this.Total.ToString();
+            string amount = this.Amount.ToString();
             StringBuilder formattedAmount = new StringBuilder();
             int endPoint = amount.IndexOf(".");
             if (endPoint < 0)
@@ -42,7 +40,7 @@ namespace License_Key_Shop_Web.Models
                 return formattedAmount.ToString() + amount.Substring(endPoint);
             }
         }
-        public virtual UserHe173252 UserUsernameNavigation { get; set; } = null!;
-        public virtual ICollection<CartItemHe173252> CartItemHe173252s { get; set; }
+
+        public virtual User UserUsernameNavigation { get; set; } = null!;
     }
 }

@@ -5,10 +5,10 @@
 }
 
 <div class="row container" style="margin-top: 50px; font-size: 26px">
-    <div class="col-md-12">
+    <div class="col-md-12 text-center">
         <h3 class="balanceDisplay">
             <a class="btn btn-success" style="font-size: 26px">
-                <i class="bi bi-cash-stack"></i> YOUR BALANCE:
+                <i class="bi bi-cash-stack"></i> SỐ DƯ TÀI KHOẢN:
                 @{
                     if (ViewBag.userBalance.Amount != null || ViewBag.userBalance.Amount != 0)
                     {
@@ -24,21 +24,29 @@
     </div>
 </div>
 
-<div class="row container">
-    <div class="col-md-9">
-        <div style="margin-top: 200px;">
-            <h3 style="font-weight: bolder;margin-bottom: 10px">DEPOSIT INSTRUCTIONS</h3>
-            <p style="font-size: 24px">
-                Step 1: Use any banking app to scan the QR code next to it and make a payment with the message: <a style="color: red; font-weight: bold; font-size: 28px">DEPOSIT_@(ViewBag.userInf.Username)</a>.<br>
-                Step 2: Wait for transaction confirmation by admin. Confirmation will take less than 30 minutes.<br>
-            </p>
+<div class="row container-fluid" style="margin-top: 40px">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="background-color: #BDC1C6; padding-bottom: 20px; border-radius: 10px">
+        <div class="row text-center">
+            <h4 style="margin-top: 10px">THÔNG TIN NẠP TIỀN</h4>
+        </div>
+        <div class="row">
+            <form asp-action="CreatePaymentUrl" asp-controller="Deposit" method="post">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label>Nhập số tiền:</label>
+                        <input value="@(ViewBag.enteredAmount)" name="amount" type="text" class="form-control" style="height: 55px;" required>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <button class="btn btn-success w-100 py-3" type="submit"><i class="bi bi-credit-card-2-back"></i> TIẾN HÀNH THANH TOÁN</button>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="text-center" style="margin-top: 65px">
-            <img src="~/img/bank.jpg" width="430" height="572" alt="bank" />
-        </div>
-    </div>
+    <div class="col-md-2"></div>
 </div>
 
 <div class="row container-fluid" style="margin-top: 40px">
@@ -47,7 +55,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col" style="font-size: 24px">DEPOSIT HISTORY LIST</th>
+                    <th scope="col" style="font-size: 24px">LỊCH SỬ NẠP TIỀN <i class="bi bi-clock-history"></i></th>
                 </tr>
             </thead>
         </table>
@@ -58,7 +66,7 @@
             {
                 <div class="text-center">
                     <img src="~/img/emptyTask.png" width="250" height="250" alt="emptyTask" />
-                    <h5 style="margin-top: 20px">YOU DO NOT HAVE ANY DEPOSIT HISTORY NOW</h5>
+                    <h5 style="margin-top: 20px">BẠN CHƯA THỰC HIỆN GIAO DỊCH NẠP TIỀN NÀO</h5>
                 </div>
             }
             else
@@ -66,10 +74,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Action Date</th>
-                            <th scope="col">Action By</th>
+                            <th scope="col">STT</th>
+                            <th scope="col">Số tiền</th>
+                            <th scope="col">Ngày nạp</th>
+                            <th scope="col">Thực hiện bởi</th>
                         </tr>
                     </thead>
                     <tbody>

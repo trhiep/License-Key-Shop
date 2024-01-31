@@ -18,12 +18,12 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     if (userInf.RoleRoleId != 1 && userInf.IsActive == true)
                     {
-                        var roleList = PRN211_FA23_SE1733Context.INSTANCE.RoleHe173252s.ToArray();
+                        var roleList = LicenseShopDBContext.INSTANCE.Roles.ToArray();
                         ViewBag.userInf = userInf;
                         ViewBag.roleList = roleList;
                         return true;
@@ -42,7 +42,7 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var customerList = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s
+                var customerList = LicenseShopDBContext.INSTANCE.Users
                         .Where(rId => rId.RoleRoleId == 1)
                         .Select(entity => new
                         {
@@ -66,12 +66,12 @@ namespace License_Key_Shop_Web.Controllers
         public async Task<IActionResult> ResetPassword(string Id)
         {
             string newPass = getRandomPassword();
-            var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(Id);
+            var userInf = LicenseShopDBContext.INSTANCE.Users.Find(Id);
             userInf.Password = EncryptionMethods.SHA256Encrypt(newPass);
             string message = "<p>Hello <strong>"+userInf.FirstName + " " + userInf.LastName+"</strong></p>\r\n<p>This is your new password: <strong>"+ newPass + "</strong></p>";
             await _emailSender.SendEmailAsync(userInf.Email, "Your password is resetted!", message, true);
-            PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Update(userInf);
-            PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+            LicenseShopDBContext.INSTANCE.Users.Update(userInf);
+            LicenseShopDBContext.INSTANCE.SaveChanges();
             return RedirectToAction("Index", "CustomerManagement");
         }
 
