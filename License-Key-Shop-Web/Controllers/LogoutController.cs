@@ -9,6 +9,7 @@ namespace License_Key_Shop_Web.Controllers
             if (HttpContext.Session.Keys.Contains("userAcc"))
             {
                 HttpContext.Session.Remove("userAcc");
+                HttpContext.Session.Remove("verificationCode");
             }
             return RedirectToAction("Index", "Home");
         }

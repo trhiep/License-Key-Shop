@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace License_Key_Shop_Web.Models
 {
-    public partial class RoleHe173252
+    public partial class Role
     {
-        public RoleHe173252()
+        public Role()
         {
-            UserHe173252s = new HashSet<UserHe173252>();
+            Users = new HashSet<User>();
         }
 
         public int RoleId { get; set; }
         public string RoleName { get; set; } = null!;
 
-        public virtual ICollection<UserHe173252> UserHe173252s { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

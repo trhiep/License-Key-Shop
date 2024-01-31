@@ -7,7 +7,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LICENSE SHOP</title>
+    <title>SHOP BẢN QUYỀN</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -33,37 +33,38 @@
 
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+    
 </head>
 
 <body>
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm py-3 py-lg-0 px-3 px-lg-0">
         <a href="/Home" class="navbar-brand ms-lg-5">
-            <h1 class="m-0 text-uppercase text-dark"><i class="bi bi-key fs-1 text-success me-3"></i>License Shop</h1>
+            <h1 class="m-0 text-uppercase text-dark"><i class="bi bi-key fs-1 text-success me-3"></i>Shop Bản Quyền</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0" style="margin-right:50px">
-                <a href="/Home" class="nav-item nav-link">Home</a>
-                <a href="Product" class="nav-item nav-link">Product</a>
+                <a href="/Home" class="nav-item nav-link">TRANG CHỦ</a>
+                <a href="/Product" class="nav-item nav-link">SẢN PHẨM</a>
                 @{
                     if (@ViewBag.userInf == null)
                     {
-                        <a href="/Login" class="nav-item nav-link">Login</a>
+                        <a href="/Login" class="nav-item nav-link">ĐĂNG NHẬP</a>
                     } else
                     {
-                        <a href="/Deposit" class="nav-item nav-link">Deposit</a>
-                        <a href="/Cart" class="nav-item nav-link"><i class="fa fa-regular fa-cart-shopping"></i>My Cart</a>
+                        <a href="/Deposit" class="nav-item nav-link">NẠP TIỀN</a>
+                        <a href="/Cart" class="nav-item nav-link"><i class="fa fa-regular fa-cart-shopping"></i>GIỎ HÀNG</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <span class="d-none d-lg-inline-flex">Hi @(ViewBag.userInf.FirstName) @(ViewBag.userInf.LastName)</span>
+                                <span class="d-none d-lg-inline-flex">CHÀO @(ViewBag.userInf.FirstName) @(ViewBag.userInf.LastName)</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="/User" class="dropdown-item">My Profile</a>
-                                <a href="/OrderHistory" class="dropdown-item">My Ordered</a>
-                                <a href="/Logout" class="dropdown-item">Log Out</a>
+                                <a href="/User" class="d-none d-lg-inline-flex dropdown-item">THÔNG TIN CÁ NHÂN</a>
+                                <a href="/OrderHistory" class="d-none d-lg-inline-flex dropdown-item">BẢN QUYỀN ĐÃ MUA</a>
+                                <a href="/Logout" class="d-none d-lg-inline-flex dropdown-item">ĐĂNG XUẤT</a>
                             </div>
                         </div>
                     }
@@ -85,10 +86,9 @@
         <div class="container pt-5">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="text-uppercase border-start border-5 border-success ps-3 mb-4">Get In Touch</h5>
-                    <p class="mb-4">"Empowering Your Digital World." - ChatGPT</p>
-                    <p class="mb-2"><i class="bi bi-geo-alt text-success me-2"></i>Hoa Lac, Thach That, Ha Noi</p>
-                    <p class="mb-2"><i class="bi bi-envelope-open text-success me-2"></i>hieptran.pa@gmail.com</p>
+                    <h5 class="text-uppercase border-start border-5 border-success ps-3 mb-4">LIÊN HỆ</h5>
+                    <p class="mb-2"><i class="bi bi-geo-alt text-success me-2"></i>Hoà Lạc, Thạch Thất, TP. Hà Nội</p>
+                    <p class="mb-2"><i class="bi bi-envelope-open text-success me-2"></i>hieptv.working@gmail.com</p>
                     <p class="mb-0"><i class="bi bi-telephone text-success me-2"></i>+84 999999999</p>
                 </div>
                 <div class="col-lg-2 col-md-6">
@@ -96,14 +96,14 @@
                 <div class="col-lg-2 col-md-6">
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="text-uppercase border-start border-5 border-success ps-3 mb-4">Newsletter</h5>
+                    <h5 class="text-uppercase border-start border-5 border-success ps-3 mb-4">ĐĂNG KÝ NHẬN TIN ƯU ĐÃI</h5>
                     <form action="">
                         <div class="input-group">
-                            <input type="text" class="form-control p-3" placeholder="Your Email">
-                            <button class="btn btn-success">Sign Up</button>
+                            <input type="text" class="form-control p-3" placeholder="Nhập email của bạn để nhận thông tin ưu đãi">
+                            <button class="btn btn-success">ĐĂNG KÝ</button>
                         </div>
                     </form>
-                    <h6 class="text-uppercase mt-4 mb-3">Follow Me</h6>
+                    <h6 class="text-uppercase mt-4 mb-3">THEO DÕI TÔI TẠI</h6>
                     <div class="d-flex">
                         <a class="btn btn-outline-success btn-square me-2" href="https://github.com/trhiep" target="_blank"><i class="bi bi-github"></i></a>
                         <a class="btn btn-outline-success btn-square me-2" href="https://www.facebook.com/tranhiwp" target="_blank"><i class="bi bi-facebook"></i></a>
@@ -111,15 +111,9 @@
                     </div>
                 </div>
                 <div class="col-12 text-center text-body">
-                    <a class="text-body" href="">Terms & Conditions</a>
+                    <a class="text-body" href="">ĐIỀU KHOẢN SỬ DỤNG</a>
                     <span class="mx-1">|</span>
-                    <a class="text-body" href="">Privacy Policy</a>
-                    <span class="mx-1">|</span>
-                    <a class="text-body" href="">Customer Support</a>
-                    <span class="mx-1">|</span>
-                    <a class="text-body" href="">Help</a>
-                    <span class="mx-1">|</span>
-                    <a class="text-body" href="">FAQs</a>
+                    <a class="text-body" href="">QUYỀN RIÊNG TƯ & BẢO MẬT</a>
                 </div>
             </div>
         </div>
@@ -128,7 +122,7 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-md-0">&copy; <a class="text-white" href="#">License Key Shop</a>. All Rights Reserved.</p>
+                    <p class="mb-md-0">&copy; <a class="text-white" href="#">SHOP BẢN QUYỀN</a>. All Rights Reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <p class="mb-0">Designed by <a class="text-white" href="https://htmlcodex.com">HTML Codex</a></p>
@@ -148,6 +142,7 @@
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/waypoints/waypoints.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>

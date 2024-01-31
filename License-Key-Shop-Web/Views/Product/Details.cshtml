@@ -9,7 +9,7 @@
         if (ViewBag.prdDetails != null)
         {
             <div class="col-md-5">
-                <img style="border-radius: 30px" src="~/WebStorage/Images/ProductImages/@(ViewBag.prdDetails.Image)" width="450" alt="alt" />
+                <img style="border-radius: 30px" src="@(ViewBag.prdDetails.Image)" width="450" alt="alt" />
             </div>
             <div class="col-md-7">
                 <h2>@(ViewBag.prdDetails.ProductName)</h2>

@@ -16,13 +16,13 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 ViewBag.userInf = userInf;
             }
 
             var random = new Random();
 
-            var allProduct = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.ToList();
+            var allProduct = LicenseShopDBContext.INSTANCE.Products.ToArray();
             var randomProduct = allProduct.OrderBy(r => random.Next()).Take(4).ToList();
             ViewBag.randomProduct = randomProduct;
             string currencyUnit = _configuration["CurrencyUnit"];

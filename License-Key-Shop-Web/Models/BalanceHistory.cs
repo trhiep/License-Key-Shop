@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace License_Key_Shop_Web.Models
 {
-    public partial class BalanceHistoryHe173252
+    public partial class BalanceHistory
     {
         public int Id { get; set; }
         public string UserUsername { get; set; } = null!;
@@ -13,6 +13,6 @@ namespace License_Key_Shop_Web.Models
         public DateTime ChangeDate { get; set; }
         public double NewBalance { get; set; }
 
-        public virtual UserHe173252 UserUsernameNavigation { get; set; } = null!;
+        public virtual User UserUsernameNavigation { get; set; } = null!;
     }
 }

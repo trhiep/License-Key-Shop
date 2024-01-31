@@ -10,7 +10,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th style="font-size: 30px; font-weight: bold" scope="col">SHOPPING CART</th>
+                    <th style="font-size: 30px; font-weight: bold" scope="col">GIỎ HÀNG</th>
                 </tr>
             </thead>
         </table>
@@ -20,13 +20,8 @@
                 {
                     <div class="text-center">
                         <img src="~/img/emptyCart.png" width="400px" alt="emptyCart" />
-                        <h5 style="margin-top: 20px;
-                                                                margin-bottom: 20px;
-                                                                font-weight: bold;
-                                                                font-size: 24px">
-                            YOUR CART IS EMPTY
-                        </h5>
-                        <a href="viewProducts" class="btn btn-success">SHOPPING NOW</a>
+                        <h5 style="margin-top: 20px; margin-bottom: 20px; font-weight: bold; font-size: 24px">GIỎ HÀNG TRỐNG!</h5>
+                        <a href="viewProducts" class="btn btn-success">MUA SẮM NGAY</a>
                     </div>
                 }
                 else
@@ -34,10 +29,10 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Product name</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">STT</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Giá</th>
                                 <th scope="col" style="width: 200px"></th>
                             </tr>
                         </thead>
@@ -60,14 +55,14 @@
                                 }
                             }
                             <tr>
-                                <th scope="col">Total</th>
+                                <th scope="col">Tổng</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col" style="font-size: 18px">@(ViewBag.cartTotal.GetFormattedTotal()) VND</th>
                                 @{
                                     if (ViewBag.cartTotal.Total != 0)
                                     {
-                                        <th scope="col" class="text-center"><a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href="/Cart/Placeorder"><i class="bi bi-cash-stack"></i> Place Order</a></th>
+                                        <th scope="col" class="text-center"><a style="margin: 0px 5px" class="btn btn-success py-2 px-3" href="/Cart/Placeorder"><i class="bi bi-cash-stack"></i> MUA NGAY</a></th>
 
                                     } else
                                     {

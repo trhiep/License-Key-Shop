@@ -10,12 +10,12 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     if (userInf.RoleRoleId != 1 && userInf.IsActive == true)
                     {
-                        var roleList = PRN211_FA23_SE1733Context.INSTANCE.RoleHe173252s.ToArray();
+                        var roleList = LicenseShopDBContext.INSTANCE.Roles.ToArray();
                         ViewBag.userInf = userInf;
                         ViewBag.roleList = roleList;
                         return true;
@@ -34,9 +34,9 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var keyList = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.ToArray();
+                var keyList = LicenseShopDBContext.INSTANCE.ProductKeys.ToArray();
                 ViewBag.keyList = keyList;
-                var prdList = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.ToArray();
+                var prdList = LicenseShopDBContext.INSTANCE.Products.ToArray();
                 ViewBag.prdList = prdList;
                 return View();
             }
@@ -52,7 +52,7 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prdList = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.ToArray();
+                var prdList = LicenseShopDBContext.INSTANCE.Products.ToArray();
                 ViewBag.prdList = prdList;
                 return View();
             }
@@ -71,15 +71,15 @@ namespace License_Key_Shop_Web.Controllers
             {
                 expirationDateStr = null;
             }
-            ProductKeyHe173252 prdKey = new ProductKeyHe173252()
+            ProductKey prdKey = new ProductKey()
             {
                 ProductProductId = productId,
-                ProductKey = keyValue,
+                ProductKeyValue = keyValue,
                 ExpirationDate = expirationDateStr,
                 IsExpired = false
             };
-            PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Add(prdKey);
-            PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+            LicenseShopDBContext.INSTANCE.ProductKeys.Add(prdKey);
+            LicenseShopDBContext.INSTANCE.SaveChanges();
             TempData["addKeyMsg"] = "Add new key successfully!";
             return Redirect("/ProductKey/Create");
         }
@@ -91,11 +91,11 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prdKey = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Find(Id);
+                var prdKey = LicenseShopDBContext.INSTANCE.ProductKeys.Find(Id);
                 if (prdKey != null)
                 {
-                    PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Remove(prdKey);
-                    PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                    LicenseShopDBContext.INSTANCE.ProductKeys.Remove(prdKey);
+                    LicenseShopDBContext.INSTANCE.SaveChanges();
                 }
                 else
                 {
@@ -116,18 +116,18 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prdKeyDetail = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Find(Id);
+                var prdKeyDetail = LicenseShopDBContext.INSTANCE.ProductKeys.Find(Id);
                 ViewBag.prdKeyDetail = prdKeyDetail;
                 if (prdKeyDetail != null)
                 {
-                    var prdDetail = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Find(prdKeyDetail.ProductProductId);
+                    var prdDetail = LicenseShopDBContext.INSTANCE.Products.Find(prdKeyDetail.ProductProductId);
                     ViewBag.prdDetail = prdDetail;
                 }
                 else
                 {
                     return RedirectToAction("Index", "ProductKey");
                 }
-                var prdList = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.ToArray();
+                var prdList = LicenseShopDBContext.INSTANCE.Products.ToArray();
                 ViewBag.prdList = prdList;
                 return View();
             }
@@ -141,14 +141,14 @@ namespace License_Key_Shop_Web.Controllers
         public IActionResult Update(IFormCollection f)
         {
             int keyId = Int32.Parse(f["keyId"]);
-            var editingPrdKey = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Find(keyId);
+            var editingPrdKey = LicenseShopDBContext.INSTANCE.ProductKeys.Find(keyId);
             if (editingPrdKey != null)
             {
                 int productId = Int32.Parse(f["productId"]);
                 string keyValue = f["keyValue"];
                 if (keyValue.Equals(""))
                 {
-                    keyValue = editingPrdKey.ProductKey;
+                    keyValue = editingPrdKey.ProductKeyValue;
                 }
                 string? expirationDate = f["expirationDate"];
                 if (expirationDate.Equals(""))
@@ -158,10 +158,10 @@ namespace License_Key_Shop_Web.Controllers
 
                 editingPrdKey.ProductProductId = productId;
                 editingPrdKey.ExpirationDate = expirationDate;
-                editingPrdKey.ProductKey = keyValue;
+                editingPrdKey.ProductKeyValue = keyValue;
 
-                PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Update(editingPrdKey);
-                PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                LicenseShopDBContext.INSTANCE.ProductKeys.Update(editingPrdKey);
+                LicenseShopDBContext.INSTANCE.SaveChanges();
             }
             return RedirectToAction("Index", "ProductKey");
         }

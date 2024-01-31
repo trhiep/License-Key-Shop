@@ -1,9 +1,11 @@
 ﻿using License_Key_Shop_Web.Models;
+using License_Key_Shop_Web.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Web;
+using System.Xml.Linq;
 
 namespace License_Key_Shop_Web.Controllers
 {
@@ -20,12 +22,12 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     if (userInf.RoleRoleId != 1 && userInf.IsActive == true)
                     {
-                        var roleList = PRN211_FA23_SE1733Context.INSTANCE.RoleHe173252s.ToArray();
+                        var roleList = LicenseShopDBContext.INSTANCE.Roles.ToArray();
                         ViewBag.userInf = userInf;
                         ViewBag.roleList = roleList;
                         return true;
@@ -44,9 +46,9 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prdList = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.ToArray();
+                var prdList = LicenseShopDBContext.INSTANCE.Products.ToArray();
                 ViewBag.prdList = prdList;
-                var cateList = PRN211_FA23_SE1733Context.INSTANCE.CategoryHe173252s.ToArray();
+                var cateList = LicenseShopDBContext.INSTANCE.Categories.ToArray();
                 ViewBag.cateList = cateList;
                 string currencyUnit = _configuration["CurrencyUnit"];
                 ViewBag.currencyUnit = currencyUnit;
@@ -64,9 +66,9 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prdDetail = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Find(Id);
+                var prdDetail = LicenseShopDBContext.INSTANCE.Products.Find(Id);
                 ViewBag.prdDetail = prdDetail;
-                var cateList = PRN211_FA23_SE1733Context.INSTANCE.CategoryHe173252s.ToArray();
+                var cateList = LicenseShopDBContext.INSTANCE.Categories.ToArray();
                 ViewBag.cateList = cateList;
                 string currencyUnit = _configuration["CurrencyUnit"];
                 ViewBag.currencyUnit = currencyUnit;
@@ -85,7 +87,7 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var cateList = PRN211_FA23_SE1733Context.INSTANCE.CategoryHe173252s.ToArray();
+                var cateList = LicenseShopDBContext.INSTANCE.Categories.ToArray();
                 ViewBag.cateList = cateList;
                 return View();
             }
@@ -96,37 +98,30 @@ namespace License_Key_Shop_Web.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Create(IFormCollection f)
+        public async Task<ActionResult> Create(IFormCollection f)
         {
-            var imageFile = HttpContext.Request.Form.Files["file"];
+            IFormFile imageFile = f.Files["file"];
 
             if (imageFile != null && imageFile.Length > 0)
             {
-                var uniqueFileName = Guid.NewGuid().ToString();
-                string fileExtension = Path.GetExtension(imageFile.FileName);
-                string completeFileName = uniqueFileName + fileExtension;
-                var filePath = Path.Combine("wwwroot/WebStorage/Images/ProductImages", completeFileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(stream);
-                }
-
+                string imgUrl = CloudinaryUploader.ProcessUpload(imageFile);
+                // Add information to database
                 int categoryId = Int32.Parse(f["categoryId"]);
                 string productName = f["productName"];
                 double price = Double.Parse(f["price"]);
                 string description = f["description"];
 
-
-                ProductHe173252 newPrd = new ProductHe173252()
+                
+                Product newPrd = new Product()
                 {
                     CategoryCategoryId = categoryId,
                     ProductName = productName,
                     Price = price,
-                    Image = completeFileName,
+                    Image = imgUrl,
                     Description = description,
                 };
-                PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Add(newPrd);
-                PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                LicenseShopDBContext.INSTANCE.Products.Add(newPrd);
+                LicenseShopDBContext.INSTANCE.SaveChanges();
             }
             return Redirect("/ProductManagement/Create");
         }
@@ -138,9 +133,9 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prdDetail = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Find(Id);
+                var prdDetail = LicenseShopDBContext.INSTANCE.Products.Find(Id);
                 ViewBag.prdDetail = prdDetail;
-                var cateList = PRN211_FA23_SE1733Context.INSTANCE.CategoryHe173252s.ToArray();
+                var cateList = LicenseShopDBContext.INSTANCE.Categories.ToArray();
                 ViewBag.cateList = cateList;
                 string currencyUnit = _configuration["CurrencyUnit"];
                 ViewBag.currencyUnit = currencyUnit;
@@ -156,28 +151,16 @@ namespace License_Key_Shop_Web.Controllers
         public async Task<IActionResult> Update(IFormCollection f)
         {
             int productId = Int32.Parse(f["productId"]);
-            var editingPrd = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Find(productId);
+            var editingPrd = LicenseShopDBContext.INSTANCE.Products.Find(productId);
             if (editingPrd != null)
             {
                 var imageFile = HttpContext.Request.Form.Files["imgFile"];
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    var uniqueFileName = Guid.NewGuid().ToString();
-                    string fileExtension = Path.GetExtension(imageFile.FileName);
-                    string completeFileName = uniqueFileName + fileExtension;
-                    var filePath = Path.Combine("wwwroot/WebStorage/Images/ProductImages", completeFileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(stream);
-                    }
-
+                    string imgUrl = CloudinaryUploader.ProcessUpload(imageFile);
                     // Delete old image
-                    var oldfilePath = Path.Combine("wwwroot/WebStorage/Images/ProductImages", editingPrd.Image);
-                    if (System.IO.File.Exists(oldfilePath))
-                    {
-                        System.IO.File.Delete(oldfilePath);
-                    }
-                    editingPrd.Image = completeFileName;
+                    // Incomplete
+                    editingPrd.Image = imgUrl;
                 }
                 int categoryId = Int32.Parse(f["categoryId"]);
                 string productName = f["productName"];
@@ -189,8 +172,8 @@ namespace License_Key_Shop_Web.Controllers
                 editingPrd.ProductName = productName;
                 editingPrd.CategoryCategoryId = categoryId;
 
-                PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Update(editingPrd);
-                PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                LicenseShopDBContext.INSTANCE.Products.Update(editingPrd);
+                LicenseShopDBContext.INSTANCE.SaveChanges();
                 return Redirect("/ProductManagement");
             }
             else
@@ -207,11 +190,11 @@ namespace License_Key_Shop_Web.Controllers
             bool canAccess = CanAccessThisManagementPage();
             if (canAccess)
             {
-                var prd = PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Find(Id);
+                var prd = LicenseShopDBContext.INSTANCE.Products.Find(Id);
                 if (prd != null)
                 {
                     // Get product key list to delete first
-                    var productKetList = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s
+                    var productKetList = LicenseShopDBContext.INSTANCE.ProductKeys
                         .Where(key => key.ProductProductId == Id)
                         .Select(entity => new
                         {
@@ -222,16 +205,16 @@ namespace License_Key_Shop_Web.Controllers
                     {
                         foreach (var key in productKetList)
                         {
-                            var keyInf = PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Find(key.KeyId);
+                            var keyInf = LicenseShopDBContext.INSTANCE.ProductKeys.Find(key.KeyId);
                             if (keyInf != null)
                             {
-                                PRN211_FA23_SE1733Context.INSTANCE.ProductKeyHe173252s.Remove(keyInf);
+                                LicenseShopDBContext.INSTANCE.ProductKeys.Remove(keyInf);
                             }
                         }
                     }
 
                     // Get product int cart list to delete
-                    var productInCartList = PRN211_FA23_SE1733Context.INSTANCE.CartItemHe173252s
+                    var productInCartList = LicenseShopDBContext.INSTANCE.CartItems
                         .Where(cartI => cartI.ProductProductId == Id)
                         .Select(entity => new
                         {
@@ -242,17 +225,17 @@ namespace License_Key_Shop_Web.Controllers
                     {
                         foreach (var cartI in productInCartList)
                         {
-                            var productIncartInf = PRN211_FA23_SE1733Context.INSTANCE.CartItemHe173252s.Find(cartI.ItemId);
+                            var productIncartInf = LicenseShopDBContext.INSTANCE.CartItems.Find(cartI.ItemId);
                             if (productIncartInf != null)
                             {
-                                PRN211_FA23_SE1733Context.INSTANCE.CartItemHe173252s.Remove(productIncartInf);
+                                LicenseShopDBContext.INSTANCE.CartItems.Remove(productIncartInf);
                             }
                         }
                     }
 
                     // Delete product
-                    PRN211_FA23_SE1733Context.INSTANCE.ProductHe173252s.Remove(prd);
-                    PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                    LicenseShopDBContext.INSTANCE.Products.Remove(prd);
+                    LicenseShopDBContext.INSTANCE.SaveChanges();
                 }
                 else
                 {

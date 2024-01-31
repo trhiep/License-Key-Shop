@@ -12,7 +12,7 @@ namespace License_Key_Shop_Web.Controllers
             string? useAcc = HttpContext.Session.GetString("userAcc");
             if (useAcc != null)
             {
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
 
@@ -31,7 +31,7 @@ namespace License_Key_Shop_Web.Controllers
             if (canAccess)
             {
                 string? useAcc = HttpContext.Session.GetString("userAcc");
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 ViewBag.userInf = userInf;
                 return View();
             }
@@ -50,7 +50,7 @@ namespace License_Key_Shop_Web.Controllers
             {
                 string oldPass = f["oldPass"];
                 string? useAcc = HttpContext.Session.GetString("userAcc");
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (EncryptionMethods.SHA256Encrypt(oldPass).Equals(userInf.Password))
                 {
                     string newPass = f["newPass"];
@@ -58,8 +58,8 @@ namespace License_Key_Shop_Web.Controllers
                     if (newPass.Equals(confirmNewPass))
                     {
                         userInf.Password = EncryptionMethods.SHA256Encrypt(newPass);
-                        PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Update(userInf);
-                        PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                        LicenseShopDBContext.INSTANCE.Users.Update(userInf);
+                        LicenseShopDBContext.INSTANCE.SaveChanges();
                         TempData["updatePassSuccsess"] = "Change password successfully!";
                     } else
                     {
@@ -84,7 +84,7 @@ namespace License_Key_Shop_Web.Controllers
             if (canAccess)
             {
                 string? useAcc = HttpContext.Session.GetString("userAcc");
-                var userInf = PRN211_FA23_SE1733Context.INSTANCE.UserHe173252s.Find(useAcc);
+                var userInf = LicenseShopDBContext.INSTANCE.Users.Find(useAcc);
                 if (userInf != null)
                 {
                     string username = f["username"];
@@ -96,8 +96,8 @@ namespace License_Key_Shop_Web.Controllers
                     userInf.LastName = lastname;
                     userInf.Email = email;
 
-                    PRN211_FA23_SE1733Context.INSTANCE.Update(userInf);
-                    PRN211_FA23_SE1733Context.INSTANCE.SaveChanges();
+                    LicenseShopDBContext.INSTANCE.Update(userInf);
+                    LicenseShopDBContext.INSTANCE.SaveChanges();
                     TempData["updateUserInfSuccess"] = "Update user information successfully!";
                 }
                 ViewBag.userInf = userInf;
